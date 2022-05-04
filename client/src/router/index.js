@@ -4,8 +4,8 @@ import Home from '../views/Home'
 import Registration from "../views/Registration"
 import Login from "../views/Login"
 import User from "../views/User"
-import Search from "../views/Search"
-import MyEvents from "../views/MyEvents"
+import SearchPage from "../views/SearchPage"
+import mySubscriptions from "../views/mySubscriptions"
 import Create from "../views/Create"
 import Events from "../views/Events"
 import EventPage from "../views/EventPage"
@@ -39,14 +39,14 @@ const routes = [
     component: User
   },
   {
-    path: "/user/search",
-    name: "Search",
-    component: Search
+    path: "/user/search/:id",
+    name: "SearchPage",
+    component: SearchPage
   },
   {
-    path: "/user/my_events",
-    name: "MyEvents",
-    component: MyEvents
+    path: "/user/my_subscriptions",
+    name: "mySubscriptions",
+    component: mySubscriptions
   },
   {
     path: "/admin/create",

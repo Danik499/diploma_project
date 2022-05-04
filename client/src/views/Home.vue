@@ -9,7 +9,7 @@
 export default {
   name: "Home",
   components: {},
-  props: ["socket"]
+  // props: ["socket"]
   // mounted() {
   //   this.socket.on("notification", () => {
   //     alert("notification");

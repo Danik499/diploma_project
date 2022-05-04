@@ -1,13 +1,18 @@
 <template>
   <div>
     <div class="navbar">
+      <div></div>
       <div class="nav-links">
+        <form @submit.prevent="submitHandler" class="form">
+          <input type="text" name="search" v-model="search" />
+          <input type="submit" value="Search" />
+        </form>
+        &nbsp;
         <span>
-          <router-link to="/user/search">Search</router-link>
-        </span>
-        <span>
-          <router-link to="/user/my_events">My events</router-link>
-        </span>
+          <router-link to="/user/my_subscriptions"
+            >My subscriptions</router-link
+          > </span
+        >&nbsp;
         <span @click="logout">
           <a>Logout</a>
         </span>
@@ -17,26 +22,41 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      search: "",
+    };
+  },
+  computed: mapGetters(["key"]),
   methods: {
     logout() {
       this.$router.push("/login");
-    }
-  }
+      this.$store.dispatch("logout");
+    },
+    submitHandler() {
+      if (this.search && this.$route.params.id != this.search) {
+        this.$router.push("/user/search/" + this.search);
+        this.rerender();
+      }
+    },
+    ...mapMutations(["rerender"]),
+  },
 };
 </script>
 
 <style lang="css" scoped>
 .navbar {
-  width: 80%;
-  margin: auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-links {
-  display: flex;
-  justify-content: space-between;
-  width: 30%;
-  margin-left: auto;
-  margin-right: 0;
+  float: right;
+}
+
+.form {
+  display: inline;
 }
 </style>

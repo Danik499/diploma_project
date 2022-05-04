@@ -1,6 +1,11 @@
 <template>
   <div>
-    <admin-nav-bar />
+    <div v-if="role == 'admin'">
+      <admin-nav-bar />
+    </div>
+    <div v-else>
+      <user-nav-bar />
+    </div>
     <textarea v-model="eventText"></textarea>
     <button @click="send">Send</button>
   </div>
@@ -8,20 +13,30 @@
 
 <script>
 import AdminNavBar from "../components/AdminNavBar";
+import UserNavBar from "../components/UserNavBar";
 export default {
   components: {
-    AdminNavBar
+    AdminNavBar,
+    UserNavBar,
   },
   data() {
     return {
-      eventText: ""
-    }
+      eventText: "",
+      role: localStorage.getItem("role"),
+    };
   },
   methods: {
-    send() {
-      
-    }
-  }
+    async send() {
+      try {
+        await this.$store.dispatch("sendNotification", {
+          eventId: this.$route.params.id,
+          notificationText: this.eventText,
+        });
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+  },
 };
 </script>
 

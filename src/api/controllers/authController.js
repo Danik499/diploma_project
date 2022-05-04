@@ -11,7 +11,7 @@ mongoose.connect(process.env.DB_CONNECT, {
 const AuthController = {
     registration: async (req, res) => {
         try {
-            const { email, password, name } = req.body
+            const { email, password, name, subscription } = req.body
 
             const allUsers = await User.find();
             const role = allUsers[0] ? "user" : "admin";
@@ -24,7 +24,8 @@ const AuthController = {
                 email,
                 password: hashedPassword,
                 name,
-                role
+                role,
+                subscriptionObjects: [subscription]
             });
 
             await user.save()
@@ -37,7 +38,7 @@ const AuthController = {
 
     login: async (req, res) => {
         try {
-            const { email, password } = req.body
+            const { email, password, subscription } = req.body
 
             const user = await User.findOne({ email })
             if (!user) return res.status(400).json({ message: "Check your email or password" })
@@ -45,11 +46,36 @@ const AuthController = {
             const isMatch = await bcrypt.compare(password, user.password)
             if (!isMatch) return res.status(400).json({ message: "Check your email or password" })
 
+            user.subscriptionObjects.push(subscription)
+            await user.save()
+
             return res.json({ userId: user._id, role: user.role })
         } catch (error) {
             return res.status(400).json({ error: `${error}` })
         }
+    },
+
+    logout: async (req, res) => {
+        try {
+            const { userId, subscription } = req.body
+            const user = await User.findById(userId)
+            for (let i = 0; i < user.subscriptionObjects.length; i++) {
+                if (isEqual(user.subscriptionObjects[i], subscription)) {
+                    user.subscriptionObjects.splice(i, 1)
+                    break
+                }
+            }
+            await user.save()
+            res.send("OK")
+        } catch (error) {
+            throw new Error(error)
+        }
     }
 }
+
+function isEqual(object1, object2) {
+    return JSON.stringify(object1) === JSON.stringify(object2)
+}
+
 
 export default AuthController

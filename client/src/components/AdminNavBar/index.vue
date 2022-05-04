@@ -1,13 +1,14 @@
 <template>
   <div>
     <div class="navbar">
+      <div></div>
       <div class="nav-links">
         <span>
-          <router-link to="/admin/events">Events</router-link>
-        </span>
+          <router-link to="/admin/events">Events</router-link> </span
+        >&nbsp;
         <span>
-          <router-link to="/admin/create">Create</router-link>
-        </span>
+          <router-link to="/admin/create">Create</router-link> </span
+        >&nbsp;
         <span @click="logout">
           <a>Logout</a>
         </span>
@@ -21,22 +22,18 @@ export default {
   methods: {
     logout() {
       this.$router.push("/login");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="css" scoped>
 .navbar {
-  width: 80%;
-  margin: auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-links {
-  display: flex;
-  justify-content: space-between;
-  width: 30%;
-  margin-left: auto;
-  margin-right: 0;
+  float: right;
 }
 </style>
