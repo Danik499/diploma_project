@@ -7,11 +7,14 @@ self.addEventListener("push", e => {
     // url = data.link
     self.registration.showNotification(data.title, {
         body: "Notified by Danik!",
-        icon: "http://image.ibb.co/frYOFd/tmlogo.png"
+        // icon: "http://image.ibb.co/frYOFd/tmlogo.png"
     });
+    // self.clients.matchAll().then(all => all.forEach(client => {
+    //     client.postMessage("test msg");
+    // }));
 });
 
-// self.addEventListener('notificationclick', function (event) {
-//     event.notification.close();
-//     clients.openWindow(url);
-// });
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+    clients.openWindow("/user/history");
+});

@@ -39,7 +39,7 @@ const AuthController = {
     login: async (req, res) => {
         try {
             const { email, password, subscription } = req.body
-
+            console.log(req.body)
             const user = await User.findOne({ email })
             if (!user) return res.status(400).json({ message: "Check your email or password" })
 
@@ -65,7 +65,7 @@ const AuthController = {
                     break
                 }
             }
-            await user.save()
+            await User.findByIdAndUpdate(userId, user)
             res.send("OK")
         } catch (error) {
             throw new Error(error)

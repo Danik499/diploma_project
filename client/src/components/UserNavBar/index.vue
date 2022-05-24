@@ -9,12 +9,13 @@
         </form>
         &nbsp;
         <span>
-          <router-link to="/user/my_subscriptions"
+          <router-link class="navbar-item" to="/user/my_subscriptions"
             >My subscriptions</router-link
           > </span
         >&nbsp;
+        <notifications-logo />
         <span @click="logout">
-          <a>Logout</a>
+          <a class="navbar-item">Logout</a>
         </span>
       </div>
     </div>
@@ -22,11 +23,16 @@
 </template>
 
 <script>
+import NotificationsLogo from "@/components/NotificationsLogo";
 import { mapMutations, mapGetters } from "vuex";
 export default {
+  components: {
+    NotificationsLogo,
+  },
   data() {
     return {
       search: "",
+      unreadCount: "",
     };
   },
   computed: mapGetters(["key"]),
@@ -43,6 +49,7 @@ export default {
     },
     ...mapMutations(["rerender"]),
   },
+  async mounted() {},
 };
 </script>
 
@@ -50,13 +57,26 @@ export default {
 .navbar {
   display: flex;
   justify-content: space-between;
+  margin-top: 15px;
 }
 
 .nav-links {
   float: right;
+  display: flex;
+  align-items: center;
 }
 
 .form {
   display: inline;
+}
+
+.navbar-item {
+  color: black;
+  text-decoration: none;
+}
+
+.navbar-item:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>

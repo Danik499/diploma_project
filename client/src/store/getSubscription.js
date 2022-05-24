@@ -1,3 +1,5 @@
+// import event from "./index"
+
 const publicVapidKey =
     "BJthRQ5myDgc7OSXzPCMftGw-n16F7zQBEN7EUD6XxcfTTvrLGWSIG7y_JxiWtVlCFua0S8MTB5rPziBqNx1qIo";
 if ("serviceWorker" in navigator) {
@@ -7,24 +9,14 @@ if ("serviceWorker" in navigator) {
 async function send() {
     const register = await navigator.serviceWorker.register("/sw.js")
 
+    // navigator.serviceWorker.addEventListener("message", async () => {
+    //     event._mutations.rerender()
+    // });
+
     return await register.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
     });
-    // console.log("Push Registered...")
-
-    // Send Push Notification
-    //   console.log("Sending Push...");
-    //   let test = await fetch("http://192.168.1.101:4000/subscribe", {
-    //     method: "POST",
-    //     body: JSON.stringify(subscription),
-    //     headers: {
-    //       "content-type": "application/json"
-    //     }
-    //   });
-    //   console.log("Push Sent...");
-    //   test = await test.json()
-    //   console.log(test);
 }
 
 function urlBase64ToUint8Array(base64String) {

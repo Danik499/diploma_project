@@ -6,8 +6,8 @@
     <div v-else>
       <user-nav-bar />
     </div>
-    <textarea v-model="eventText"></textarea>
-    <button @click="send">Send</button>
+    <textarea class="notification-text" v-model="eventText"></textarea>
+    <button class="send-btn" @click="send">Send</button>
   </div>
 </template>
 
@@ -28,10 +28,12 @@ export default {
   methods: {
     async send() {
       try {
-        await this.$store.dispatch("sendNotification", {
-          eventId: this.$route.params.id,
-          notificationText: this.eventText,
-        });
+        if (this.eventText) {
+          await this.$store.dispatch("sendNotification", {
+            eventId: this.$route.params.id,
+            notificationText: this.eventText,
+          });
+        }
       } catch (error) {
         throw new Error(error);
       }
@@ -41,4 +43,27 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.notification-text {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  resize: vertical;
+  margin-top: 10px;
+  width: 100%;
+  height: 100px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.send-btn {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: white;
+  font-weight: 550;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.send-btn:active {
+  background: rgb(232, 232, 232);
+}
 </style>

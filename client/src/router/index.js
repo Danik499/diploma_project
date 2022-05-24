@@ -9,6 +9,7 @@ import mySubscriptions from "../views/mySubscriptions"
 import Create from "../views/Create"
 import Events from "../views/Events"
 import EventPage from "../views/EventPage"
+import NotificationsHistory from "../views/NotificationsHistory"
 
 Vue.use(VueRouter)
 
@@ -62,6 +63,11 @@ const routes = [
     path: "/event/:id",
     name: "EventPage",
     component: EventPage
+  },
+  {
+    path: "/user/history",
+    name: "NotificationsHistory",
+    component: NotificationsHistory
   }
 ]
 

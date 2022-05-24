@@ -5,7 +5,9 @@ const schema = new Schema({
     subscribers: [{
         type: Types.ObjectId,
         ref: "User"
-    }]
+    }],
+    subscribersCount: { type: Number },
+    lastPosted: { type: String }
 })
 
 export default model("Event", schema)

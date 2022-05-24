@@ -1,6 +1,7 @@
 <template>
   <div>
     <user-nav-bar />
+    <!-- v-if="events.length[0]" -->
     <searched-events :events="events" :key="rerender" />
   </div>
 </template>

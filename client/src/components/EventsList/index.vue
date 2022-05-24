@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="e in events" :key="e._id">
-      <event :event="e" />
+      <event :event="e" @rerender="rerender" />
     </div>
   </div>
 </template>
@@ -11,11 +11,16 @@ import Event from "../Event";
 
 export default {
   components: {
-    Event
+    Event,
   },
   props: {
-    events: []
-  }
+    events: [],
+  },
+  methods: {
+    rerender() {
+      this.$emit("rerender");
+    },
+  },
 };
 </script>
 

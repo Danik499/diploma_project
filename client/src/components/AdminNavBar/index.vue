@@ -4,13 +4,17 @@
       <div></div>
       <div class="nav-links">
         <span>
-          <router-link to="/admin/events">Events</router-link> </span
+          <router-link class="navbar-item" to="/admin/events"
+            >Events</router-link
+          > </span
         >&nbsp;
         <span>
-          <router-link to="/admin/create">Create</router-link> </span
+          <router-link class="navbar-item" to="/admin/create"
+            >Create</router-link
+          > </span
         >&nbsp;
         <span @click="logout">
-          <a>Logout</a>
+          <a class="navbar-item">Logout</a>
         </span>
       </div>
     </div>
@@ -35,5 +39,15 @@ export default {
 
 .nav-links {
   float: right;
+}
+
+.navbar-item {
+  color: black;
+  text-decoration: none;
+}
+
+.navbar-item:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 </style>

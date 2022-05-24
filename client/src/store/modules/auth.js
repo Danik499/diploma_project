@@ -31,10 +31,14 @@ export default {
                     })
                 })
                 let res = await response.json()
-                localStorage.setItem("role", res.role)
-                localStorage.setItem("userId", res.userId)
-                commit("setUserId", res.userId)
-                commit("setRole", res.role)
+                if (!response.ok) {
+                    throw new Error()
+                } else {
+                    localStorage.setItem("role", res.role)
+                    localStorage.setItem("userId", res.userId)
+                    commit("setUserId", res.userId)
+                    commit("setRole", res.role)
+                }
             } catch (error) {
                 commit("setError", error)
                 dispatch("buildError", "email already in use")
@@ -57,17 +61,23 @@ export default {
                     })
                 })
                 let res = await response.json()
-                localStorage.setItem("role", res.role)
-                localStorage.setItem("userId", res.userId)
-                commit("setUserId", res.userId)
-                commit("setRole", res.role)
+                if (!response.ok) {
+                    throw new Error()
+                } else {
+                    localStorage.setItem("role", res.role)
+                    localStorage.setItem("userId", res.userId)
+                    commit("setUserId", res.userId)
+                    commit("setRole", res.role)
+                    dispatch("buildError", null)
+                }
             } catch (error) {
+                console.log("uwu")
                 dispatch("buildError", "Check your email or password")
             } finally {
                 commit("setLoading", false)
             }
         },
-        async logout() {
+        async logout({ commit }) {
             try {
                 await fetch(`${this.state.serverUrl}/auth/logout`, {
                     method: "POST",
@@ -79,6 +89,10 @@ export default {
                         subscription: await this.state.subscription
                     })
                 })
+                localStorage.removeItem("role")
+                localStorage.removeItem("userId")
+                commit("setUserId", "")
+                commit("setRole", "")
             } catch (error) {
                 throw new Error(error)
             }
@@ -90,6 +104,12 @@ export default {
                     break
                 case "Check your email or password":
                     commit("setError", "Check your email or password")
+                    break
+                case null:
+                    commit("setError", null)
+                    break
+                case "All fields must be filled":
+                    commit("setError", "All fields must be filled")
                     break
                 default:
                     break

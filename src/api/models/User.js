@@ -11,7 +11,8 @@ const schema = new Schema({
     mySubscriptions: [{
         type: Types.ObjectId,
         ref: "Event"
-    }]
+    }],
+    notificationsHistory: { type: Array }
 })
 
 export default model("User", schema)

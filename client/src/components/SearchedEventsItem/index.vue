@@ -1,9 +1,19 @@
 <template>
   <div>
     <div class="event-item">
-      <div class="info">{{ item.name }}</div>
+      <div class="info">
+        {{ item.name }} <br />
+        <br />
+        <span
+          >{{ item.subscribersCount }} subscriber{{
+            item.subscribersCount == 1 ? "" : "s"
+          }}</span
+        >
+        <br />
+        <span>Last posted at {{ item.lastPosted }}</span>
+      </div>
       <div class="sub">
-        <button @click="subscribeHandler">
+        <button class="subscribe-btn" @click="subscribeHandler">
           {{ buttonText }}
         </button>
       </div>
@@ -52,5 +62,13 @@ export default {
   margin-top: 5px;
   display: flex;
   justify-content: space-between;
+}
+
+.subscribe-btn {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 </style>

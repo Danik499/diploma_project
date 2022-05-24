@@ -6,7 +6,7 @@
       <b>{{ search }}</b>
     </p>
     <p v-else>There are no events on your request</p>
-    <searched-events :events="events" />
+    <searched-events :events="events" v-if="found" />
   </div>
 </template>
 

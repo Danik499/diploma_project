@@ -1,7 +1,7 @@
 <template>
   <div>
     <admin-nav-bar />
-    <events-list :events="events" />
+    <events-list :events="events" @rerender="rerender" :key="key" />
   </div>
 </template>
 
@@ -12,7 +12,12 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     AdminNavBar,
-    EventsList
+    EventsList,
+  },
+  data() {
+    return {
+      key: 0,
+    };
   },
   computed: mapGetters(["events"]),
   async mounted() {
@@ -21,7 +26,13 @@ export default {
     } catch (error) {
       throw new Error(error);
     }
-  }
+  },
+  methods: {
+    async rerender() {
+      this.key++;
+      await this.$store.dispatch("loadEvents");
+    },
+  },
 };
 </script>
 
