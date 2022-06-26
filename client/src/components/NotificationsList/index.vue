@@ -8,8 +8,8 @@
       <div class="notification">
         <notifications-item :notification="n[0]" />
       </div>
-      <div class="notification">
-        <notifications-item v-if="n[1]" :notification="n[1]" />
+      <div v-if="n[1]" class="notification">
+        <notifications-item :notification="n[1]" />
       </div>
     </div>
   </div>

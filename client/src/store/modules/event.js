@@ -122,7 +122,6 @@ export default {
                 })
                 const notifications = await response.json()
                 let unreadCount = 0
-                console.log("notifs", notifications)
                 for (let n of notifications) {
                     if (!n.isRead) unreadCount++
                     else break
@@ -141,6 +140,20 @@ export default {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({ userId: localStorage.getItem("userId") })
+                })
+            } catch (error) {
+                throw new Error(error)
+            }
+        },
+        async startEmergency({ commit }, emergencyInfo) {
+            commit
+            try {
+                fetch(this.state.serverUrl + "/event/startEmergency", {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json"
+                    },
+                    body: JSON.stringify(emergencyInfo)
                 })
             } catch (error) {
                 throw new Error(error)

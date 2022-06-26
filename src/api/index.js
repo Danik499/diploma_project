@@ -17,5 +17,8 @@ apiRouter.delete("/event/delete", EventsController.deleteEvent)
 apiRouter.post("/event/sendNotification", EventsController.sendNotifications)
 apiRouter.post("/event/getUserNotifications", EventsController.getUserNotifications)
 apiRouter.post("/event/readNotifications", EventsController.readNotifications)
+apiRouter.post("/event/startEmergency", EventsController.startEmergency)
 
 export default apiRouter
+
+

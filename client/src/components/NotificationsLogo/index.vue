@@ -9,6 +9,7 @@
       <span class="icon-button__badge" v-if="unreadCount != 0">{{
         unreadCount
       }}</span>
+      <!-- <span class="icon-button__badge">3</span> -->
     </button>
   </div>
 </template>

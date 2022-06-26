@@ -29,7 +29,6 @@ export default {
       i % 2 == 0 ? res.push([n]) : res[res.length - 1].push(n);
     });
     this.preparedArray = res;
-    console.log(res);
     navigator.serviceWorker.addEventListener("message", async () => {
       await this.$store.dispatch("readNotifications");
       this.rerenderKey++;

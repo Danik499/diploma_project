@@ -130,6 +130,7 @@ const EventsController = {
                     .sendNotification(s, payload)
                     .catch(err => console.error(err));
             }
+
             notif.date = formatDate(new Date())
             notif.eventName = event.name
             await notif.save()
@@ -163,6 +164,24 @@ const EventsController = {
                 n.isRead = true
             }
             await User.findByIdAndUpdate(req.body.userId, user)
+            res.send("OK")
+        } catch (error) {
+            throw new Error(error)
+        }
+    },
+    startEmergency: async (req, res) => {
+        try {
+            const allUsers = await User.find()
+            let payload = JSON.stringify({
+                title: req.body.emergencyText
+            })
+            for (let user of allUsers) {
+                for (let s of user.subscriptionObjects) {
+                    webpush
+                        .sendNotification(s, payload)
+                        .catch(err => console.error(err));
+                }
+            }
             res.send("OK")
         } catch (error) {
             throw new Error(error)

@@ -39,7 +39,6 @@ const AuthController = {
     login: async (req, res) => {
         try {
             const { email, password, subscription } = req.body
-            console.log(req.body)
             const user = await User.findOne({ email })
             if (!user) return res.status(400).json({ message: "Check your email or password" })
 

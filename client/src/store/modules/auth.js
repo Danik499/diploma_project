@@ -71,7 +71,6 @@ export default {
                     dispatch("buildError", null)
                 }
             } catch (error) {
-                console.log("uwu")
                 dispatch("buildError", "Check your email or password")
             } finally {
                 commit("setLoading", false)

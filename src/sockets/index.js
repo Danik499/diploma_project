@@ -1,18 +1,23 @@
 module.exports = io => {
+    let isEmergency = false
+    let emergencyText = ""
+
     io.sockets.on("connection", socket => {
-        console.log("a user connected now");
-
-        socket.on("join-room", room => {
-            socket.join(room)
-            console.log(`user joined ${room}`)
+        socket.emit("emergency-info", {
+            isEmergency, emergencyText
         })
 
-        socket.on("send-to-room", room => {
-            socket.to(room).emit("notification");
+        socket.on("start-emergency", emergencyInfo => {
+            isEmergency = true
+            emergencyText = emergencyInfo.emergencyText
+            io.sockets.emit("start-emergency", emergencyText)
         })
 
-        socket.on("emit-event", ({ text, room }) => {
-            socket.to(room).emit()
+        socket.on("end-emergency", () => {
+            isEmergency = false
+            emergencyText = ""
+            io.sockets.emit("end-emergency")
         })
     })
 }
+

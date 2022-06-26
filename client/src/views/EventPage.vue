@@ -6,6 +6,7 @@
     <div v-else>
       <user-nav-bar />
     </div>
+    <b v-if="hasName">{{ currentEventName }}</b>
     <textarea class="notification-text" v-model="eventText"></textarea>
     <button class="send-btn" @click="send">Send</button>
   </div>
@@ -14,6 +15,8 @@
 <script>
 import AdminNavBar from "../components/AdminNavBar";
 import UserNavBar from "../components/UserNavBar";
+import { mapGetters } from "vuex";
+
 export default {
   components: {
     AdminNavBar,
@@ -22,9 +25,12 @@ export default {
   data() {
     return {
       eventText: "",
+      currentEventName: "",
+      hasName: false,
       role: localStorage.getItem("role"),
     };
   },
+  computed: mapGetters(["events"]),
   methods: {
     async send() {
       try {
@@ -38,6 +44,16 @@ export default {
         throw new Error(error);
       }
     },
+  },
+  mounted() {
+    let hasName = !!this.events[0];
+    this.hasName = hasName;
+    if (hasName) {
+      let currentEvent = this.events.find(
+        (e) => e._id === this.$route.params.id
+      );
+      this.currentEventName = currentEvent.name;
+    }
   },
 };
 </script>
